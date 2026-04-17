@@ -18,6 +18,12 @@ function App() {
     icon: "help" 
   });
 
+  const [brushSettings, setBrushSettings] = useState({
+    size: 6,
+    color: '#f43f5e', // Default rose
+    opacity: 1
+  });
+
   return (
     <div className="container-outer">
       <SplashScreen isVisible={isLoading} />
@@ -38,8 +44,8 @@ function App() {
       
       <BrushControls 
         activeMode={modeData.name}
-        brushSettings={canvasLayerRef.current?.brushSettings || { size: 6, color: '#f43f5e', opacity: 1 }}
-        setBrushSettings={(settings) => canvasLayerRef.current?.setBrushSettings(settings)}
+        brushSettings={brushSettings}
+        setBrushSettings={setBrushSettings}
       />
 
       <CanvasLayer 
@@ -48,6 +54,7 @@ function App() {
         landmarks={landmarks}
         fingerCount={fingerCount}
         onModeChange={setModeData}
+        brushSettings={brushSettings}
       />
     </div>
   );

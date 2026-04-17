@@ -11,9 +11,8 @@ const CanvasLayer = forwardRef(({
   videoRef, 
   landmarks, 
   fingerCount, 
-  mode, 
-  color,
-  onModeChange
+  onModeChange,
+  brushSettings
 }, ref) => {
   const drawingCanvasRef = useRef(null);
   const skeletonCanvasRef = useRef(null);
@@ -21,16 +20,12 @@ const CanvasLayer = forwardRef(({
   const { 
     drawStroke, 
     clearCanvas, 
-    resetStroke, 
-    brushSettings, 
-    setBrushSettings 
-  } = useDrawing(drawingCanvasRef);
+    resetStroke
+  } = useDrawing(drawingCanvasRef, brushSettings);
 
   // Expose methods to parent
   useImperativeHandle(ref, () => ({
-    clearCanvas,
-    setBrushSettings,
-    brushSettings
+    clearCanvas
   }));
 
   // Handle Mode Selection Logic

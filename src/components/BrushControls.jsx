@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Settings2, X } from 'lucide-react';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function BrushControls({ brushSettings, setBrushSettings, activeMode }) {

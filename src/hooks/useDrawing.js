@@ -1,13 +1,7 @@
 import { useRef, useCallback, useState } from 'react';
 import { lerp } from '../utils/fingerDetection';
 
-export function useDrawing(canvasRef) {
-  const [brushSettings, setBrushSettings] = useState({
-    size: 6,
-    color: '#f43f5e', // Default rose
-    opacity: 1
-  });
-  
+export function useDrawing(canvasRef, externalBrushSettings) {
   // State to track if we're currently in a continuous stroke
   const [isDrawing, setIsDrawing] = useState(false);
 
@@ -46,7 +40,7 @@ export function useDrawing(canvasRef) {
     setIsDrawing(isDrawingInput);
 
     if (isDrawingInput) {
-      const activeSettings = overrideSettings || brushSettings;
+      const activeSettings = overrideSettings || externalBrushSettings;
       
       ctx.beginPath();
       ctx.lineWidth = activeSettings.size;
@@ -72,20 +66,20 @@ export function useDrawing(canvasRef) {
     prevPointRef.current = { x: currentX, y: currentY, initialized: true };
     
     return { lx: currentX, ly: currentY }; // return the smoothed coordinates for skeleton rendering
-  }, [canvasRef, brushSettings]);
+  }, [canvasRef, externalBrushSettings]);
 
   const resetStroke = useCallback(() => {
      prevPointRef.current.initialized = false;
   }, []);
 
-  return { drawStroke, clearCanvas, resetStroke, isDrawing, brushSettings, setBrushSettings };
+  return { drawStroke, clearCanvas, resetStroke, isDrawing };
 }
 
 // Utility to convert hex to rgb for opacity support
 function hexToRgb(hex) {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  hex = hex.replace(shorthorthandRegex, function(m, r, g, b) {
+  hex = hex.replace(shorthandRegex, function(m, r, g, b) {
     return r + r + g + g + b + b;
   });
 

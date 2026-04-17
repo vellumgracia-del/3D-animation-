@@ -74,6 +74,7 @@ export function useMediaPipe(videoElementRef) {
 
     } catch (err) {
       console.error("MediaPipe Init Error:", err);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setError("Failed to load Neural Network Modules.");
       setIsLoading(false);
     }
@@ -87,6 +88,7 @@ export function useMediaPipe(videoElementRef) {
         handsRef.current.close();
       }
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoElementRef]);
 
   return { landmarks, fingerCount, isLoading, error };
